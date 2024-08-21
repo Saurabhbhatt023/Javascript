@@ -1,0 +1,65 @@
+
+const products = [
+    { id: 1, name: "Laptop", category: "Electronics", price: 1200 },
+    { id: 2, name: "Smartphone", category: "Electronics", price: 800 },
+    { id: 3, name: "Coffee Maker", category: "Home Appliances", price: 100 },
+    { id: 4, name: "Headphones", category: "Electronics", price: 150 },
+    { id: 5, name: "Blender", category: "Home Appliances", price: 60 },
+    { id: 6, name: "Tablet", category: "Electronics", price: 600 },
+    { id: 7, name: "Air Fryer", category: "Home Appliances", price: 120 },
+];
+
+// Function to filter products by category
+const filterProductsByCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const filteredProducts = products.filter(product => product.category === category);
+            if (filteredProducts.length === 0) {
+                reject("No products found in this category.");
+            } else {
+                resolve(filteredProducts);
+            }
+        }, 1000); // Simulating async operation
+    });
+};
+
+// Function to apply discount to products
+const applyDiscount = (products, discountPercentage) => {
+    return products.map(product => {
+        const discountedPrice = product.price - (product.price * (discountPercentage / 100));
+        return { ...product, discountedPrice: discountedPrice.toFixed(2) };
+    });
+};
+
+// Function to display products
+const displayProducts = (products) => {
+    products.forEach(product => {
+        console.log(`${product.name} - Original Price: $${product.price}, Discounted Price: $${product.discountedPrice}`);
+    });
+};
+
+// Main function to execute the operations
+const main = async () => {
+    try {
+        const categoryToFilter = "Electronics"; // Change this to filter different categories
+        const discountPercentage = 10; // 10% discount
+        
+        console.log(`Filtering products in category: ${categoryToFilter}...`);
+        
+        // Filter products
+        const filteredProducts = await filterProductsByCategory(categoryToFilter);
+        
+        // Apply discount
+        const discountedProducts = applyDiscount(filteredProducts, discountPercentage);
+        
+        // Display discounted products
+        console.log(`\nDiscounted Products in '${categoryToFilter}':`);
+        displayProducts(discountedProducts);
+        
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Execute the main function
+main();
