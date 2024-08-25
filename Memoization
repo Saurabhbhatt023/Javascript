@@ -1,0 +1,22 @@
+function memoizedFibonacci() {
+    let cache = {};
+
+    function fibonacci(n) {
+        if (n in cache) {
+            return cache[n];
+        } else {
+            if (n <= 1) {
+                cache[n] = n;
+            } else {
+                cache[n] = fibonacci(n - 1) + fibonacci(n - 2);
+            }
+            return cache[n];
+        }
+    }
+
+    return fibonacci;
+}
+
+const fib = memoizedFibonacci();
+console.log(fib(10)); // Output: 55
+console.log(fib(20)); // Output: 6765
